@@ -31,14 +31,14 @@ sudo iptables -A INPUT -i eth0 -p tcp --dport 80 -j ACCEPT
 sudo iptables -L -nv --line-numbers
 ~~~
 
-1. Permite poder hacer conexiones ssh al exterior.
+### 1. Permite poder hacer conexiones ssh al exterior.
 
 ~~~
 sudo iptables -A OUTPUT -p tcp --dport 22 -j ACCEPT
 sudo iptables -A INPUT -p tcp --sport 22 -j ACCEPT
 ~~~
 
-2. Deniega el acceso a tu servidor web desde una ip concreta.
+### 2. Deniega el acceso a tu servidor web desde una ip concreta.
 
 ~~~
 sudo iptables -I INPUT -s 172.22.2.43 -p tcp --sport 80 -j DROP
@@ -50,7 +50,7 @@ sudo iptables -I INPUT -s 172.22.2.43 -p tcp --sport 443 -j DROP
 sudo iptables -I OUTPUT -d 172.22.2.43 -p tcp --dport 443 -j DROP
 ~~~
 
-3. Permite hacer consultas DNS sólo al servidor 192.168.202.2 Comprueba que no puedes hacer un dig @1.1.1.1.
+### 3. Permite hacer consultas DNS sólo al servidor 192.168.202.2 Comprueba que no puedes hacer un dig @1.1.1.1.
 
 
 ###### Eliminamos la regla DNS anterior que daba acceso a todo:
@@ -142,7 +142,7 @@ dig @1.1.1.1
    ;; connection timed out; no servers could be reached
 ~~~
 
-4. No permitir el acceso al servidor web de www.josedomingo.org (Tienes que utilizar la ip). ¿Puedes acceder a fp.josedomingo.org?
+### 4. No permitir el acceso al servidor web de www.josedomingo.org (Tienes que utilizar la ip). ¿Puedes acceder a fp.josedomingo.org?
 
 ###### A la dirección ftp.josedomingo.org si se puede acceder
 
@@ -156,7 +156,7 @@ sudo iptables -I INPUT -i eth0 -p tcp --sport 443 -s 137.74.161.90 -j DROP
 sudo iptables -I OUTPUT -o eth0 -p tcp --dport 443 -d 137.74.161.90 -j DROP
 ~~~
 
-5. Permite mandar un correo usando nuestro servidor de correo: babuino-smtp. Para probarlo ejecuta un telnet babuino-smtp.gonzalonazareno.org 25.
+### 5. Permite mandar un correo usando nuestro servidor de correo: babuino-smtp. Para probarlo ejecuta un telnet babuino-smtp.gonzalonazareno.org 25.
 
 ~~~
 sudo iptables -A OUTPUT -o eth0 -p tcp --dport 25 -d 192.168.203.3 -j ACCEPT
@@ -173,7 +173,7 @@ telnet babuino-smtp.gonzalonazareno.org 25
    220 babuino-smtp.gonzalonazareno.org ESMTP Postfix (Debian/GNU)
 ~~~
 
-6. Instala un servidor mariadb, y permite los accesos desde la ip de tu cliente.
+### 6. Instala un servidor mariadb, y permite los accesos desde la ip de tu cliente.
 
 ###### Ahora vamos a modificar un linea del fichero /etc/mysql/mariadb.conf.d/50-server.cnf
 
