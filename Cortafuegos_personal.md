@@ -9,12 +9,12 @@ sudo iptables -Z
 sudo iptables -t nat -Z
 sudo iptables -A INPUT -s 172.22.0.0/16 -p tcp --dport 22 -j ACCEPT
 sudo iptables -A OUTPUT -d 172.22.0.0/16 -p tcp --sport 22 -j ACCEPT
+sudo iptables -A INPUT -s 172.23.0.0/16 -p tcp --dport 22 -j ACCEPT
+sudo iptables -A OUTPUT -d 172.23.0.0/16 -p tcp --sport 22 -j ACCEPT
 sudo iptables -P INPUT DROP
 sudo iptables -P OUTPUT DROP
 sudo iptables -A INPUT -i lo -p icmp -j ACCEPT
 sudo iptables -A OUTPUT -o lo -p icmp -j ACCEPT
-sudo iptables -A INPUT -s 172.22.0.0/16 -p tcp --dport 22 -j ACCEPT
-sudo iptables -A OUTPUT -d 172.22.0.0/16 -p tcp --sport 22 -j ACCEPT
 sudo iptables -A OUTPUT -o eth0 -p icmp -j ACCEPT
 sudo iptables -A INPUT -i eth0 -p icmp -j ACCEPT
 sudo iptables -A OUTPUT -o eth0 -p udp --dport 53 -j ACCEPT
@@ -175,3 +175,45 @@ telnet babuino-smtp.gonzalonazareno.org 25
 
 6. Instala un servidor mariadb, y permite los accesos desde la ip de tu cliente.
 
+###### Ahora vamos a modificar un linea del fichero /etc/mysql/mariadb.conf.d/50-server.cnf
+
+##### Creamos la base de datos
+
+~~~
+bind-address            = 0.0.0.0
+~~~
+
+###### Creamos el usuario y le damos permiso
+
+~~~
+CREATE USER 'prueba'@'%' IDENTIFIED BY 'prueba';
+GRANT ALL PRIVILEGES ON *.* TO prueba@'%' IDENTIFIED BY 'prueba';
+GRANT ALL PRIVILEGES ON *.* TO prueba@localhost IDENTIFIED BY 'prueba';
+~~~
+
+###### Reiniciamos el servicio
+
+~~~
+sudo systemctl restart mariadb.service
+~~~
+
+##### Cramos las reglas
+
+~~~
+sudo iptables -A INPUT -i eth0 -p tcp --dport 3306 -s 172.22.200.125 -j ACCEPT
+sudo iptables -A OUTPUT -o eth0 -p tcp --sport 3306 -d 172.22.200.125 -j ACCEPT
+~~~
+
+##### Prueba
+
+~~~
+debian@croqueta:~$ sudo mysql -u prueba -p pruebadb -h 172.22.200.218
+Enter password: 
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 39
+Server version: 10.3.18-MariaDB-0+deb10u1 Debian 10
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+~~~
