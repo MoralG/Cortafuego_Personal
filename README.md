@@ -2,9 +2,10 @@
 
 ![Cortafuegos](image/Cortafuegos.jpg)
 
+> [Tareas a realizar]()
 ### Vamos a realizar los primeros pasos para implementar un cortafuegos en un nodo de una red, aquel que se ejecuta en el propio equipo que trata de proteger, lo que a veces se denomina un cortafuegos personal.
 
-### Ejercicio1: Implementación de un cortafuego personal
+## Ejercicio1: Implementación de un cortafuego personal
 #### Vamos a realizar los primeros pasos para implementar un cortafuegos en un nodo de una red, aquel que se ejecuta en el propio equipo que trata de proteger, lo que a veces se denomina un cortafuegos personal.
 
 ### Esquema de red
@@ -100,3 +101,17 @@ iptables -A INPUT -i eth0 -p tcp --sport 443 -j ACCEPT
 iptables -A OUTPUT -o eth0 -p tcp --sport 80 -j ACCEPT
 iptables -A INPUT -i eth0 -p tcp --dport 80 -j ACCEPT
 ~~~
+
+## Tareas a realizar:
+
+[Tarea 1](https://github.com/MoralG/Cortafuego_personal/blob/master/Cortafuegos_personal.md#1-permite-poder-hacer-conexiones-ssh-al-exterior). Permite poder hacer conexiones ssh al exterior
+
+[Tarea 2](https://github.com/MoralG/Cortafuego_personal/blob/master/Cortafuegos_personal.md#2-deniega-el-acceso-a-tu-servidor-web-desde-una-ip-concreta). Deniega el acceso a tu servidor web desde una ip concreta
+
+[Tarea 3](https://github.com/MoralG/Cortafuego_personal/blob/master/Cortafuegos_personal.md#3-permite-hacer-consultas-dns-s%C3%B3lo-al-servidor-1921682022-comprueba-que-no-puedes-hacer-un-dig-1111). Permite hacer consultas DNS sólo al servidor 192.168.202.2 Comprueba que no puedes hacer un dig @1.1.1.1
+
+[Tarea 4](https://github.com/MoralG/Cortafuego_personal/blob/master/Cortafuegos_personal.md#4-no-permitir-el-acceso-al-servidor-web-de-wwwjosedomingoorg-tienes-que-utilizar-la-ip-puedes-acceder-a-fpjosedomingoorg). No permitir el acceso al servidor web de www.josedomingo.org (Tienes que utilizar la ip). ¿Puedes acceder a fp.josedomingo.org?
+
+[Tarea 5](https://github.com/MoralG/Cortafuego_personal/blob/master/Cortafuegos_personal.md#5-permite-mandar-un-correo-usando-nuestro-servidor-de-correo-babuino-smtp-para-probarlo-ejecuta-un-telnet-babuino-smtpgonzalonazarenoorg-25). Permite mandar un correo usando nuestro servidor de correo: babuino-smtp. Para probarlo ejecuta un telnet babuino-smtp.gonzalonazareno.org 25.
+
+[Tarea 6](https://github.com/MoralG/Cortafuego_personal/blob/master/Cortafuegos_personal.md#6-instala-un-servidor-mariadb-y-permite-los-accesos-desde-la-ip-de-tu-cliente). Instala un servidor mariadb, y permite los accesos desde la ip de tu cliente
